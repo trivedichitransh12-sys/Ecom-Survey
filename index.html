@@ -6,7 +6,7 @@
 <title>Online Shopping Habits Survey</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap">
 <style>
-/* Neutral consumer-research look: warm paper, teal accent, numbered cards */
+/* One question per screen — mobile-first stepper */
 :root{
   --bg:#F6F4EF; --card:#FFFFFF; --ink:#1C1B22; --muted:#6B6878;
   --line:#E4E1D8; --accent:#0E7C7B; --accent-soft:#E3F1F0; --accent-ink:#0A6160;
@@ -18,78 +18,78 @@
     --err:#F87171; }
 }
 *{box-sizing:border-box}
-html,body{margin:0}
+html,body{margin:0; height:100%}
 body{
   background:var(--bg); color:var(--ink);
   font-family:'DM Sans',system-ui,Arial,sans-serif; font-size:16px; line-height:1.5;
-  padding-block:0 64px; padding-inline:16px;
+  display:flex; flex-direction:column;
 }
-.wrap{max-width:680px; margin:0 auto}
-#bar{position:sticky; top:0; z-index:5; background:var(--bg); padding:12px 0 10px}
-#barTrack{height:6px; background:var(--line); border-radius:3px; overflow:hidden}
-#barFill{height:100%; width:0%; background:var(--accent); border-radius:3px; transition:width .25s}
-#barLabel{font-size:13px; color:var(--muted); margin-top:6px}
-header.hero{padding:28px 0 8px}
-h1{font-family:'Space Grotesk',Arial,sans-serif; font-size:clamp(28px,6vw,38px); line-height:1.15; margin:10px 0 8px; text-wrap:balance}
-.sub{color:var(--muted); margin:0 0 4px}
-.meta{display:flex; gap:8px; flex-wrap:wrap; margin:14px 0 6px}
-.meta span{font-size:13px; background:var(--accent-soft); color:var(--accent-ink); border-radius:999px; padding:5px 12px; font-weight:500}
-.section-h{font-family:'Space Grotesk',Arial,sans-serif; font-weight:700; font-size:14px; letter-spacing:2px; text-transform:uppercase; color:var(--accent-ink); margin:34px 0 10px}
-.card{background:var(--card); border:1px solid var(--line); border-radius:16px; padding:20px; margin:0 0 14px}
-.card.missing{border-color:var(--err); box-shadow:0 0 0 3px rgba(214,69,69,.15)}
-.qrow{display:flex; gap:12px; align-items:baseline}
-.qnum{font-family:'Space Grotesk',Arial,sans-serif; font-weight:700; font-size:14px; color:var(--accent-ink); background:var(--accent-soft); border-radius:8px; padding:2px 8px; flex-shrink:0}
-.qt{font-weight:700; font-size:17px; margin:0}
-.qh{color:var(--muted); font-size:14px; margin:4px 0 0; font-style:italic}
+#top{padding:14px 16px 10px; flex-shrink:0}
+#topRow{display:flex; justify-content:space-between; align-items:center; max-width:640px; margin:0 auto 8px; width:100%}
+#stepLabel{font-size:13px; color:var(--muted); font-weight:500}
+#reqLabel{font-size:13px; color:var(--accent-ink); font-weight:500}
+#barTrack{height:6px; background:var(--line); border-radius:3px; overflow:hidden; max-width:640px; margin:0 auto}
+#barFill{height:100%; width:0%; background:var(--accent); border-radius:3px; transition:width .3s}
+#stage{flex:1; overflow-y:auto; padding:8px 16px 16px; -webkit-overflow-scrolling:touch}
+.step{display:none; max-width:640px; margin:0 auto; animation:slidein .28s ease}
+.step.active{display:block}
+@keyframes slidein{from{opacity:0; transform:translateY(14px)}to{opacity:1; transform:none}}
+@media (prefers-reduced-motion: reduce){ .step{animation:none} *{transition:none!important} }
+.qt{font-family:'Space Grotesk',Arial,sans-serif; font-weight:700; font-size:clamp(21px,5.4vw,27px); line-height:1.25; margin:14px 0 4px; text-wrap:balance}
+.qh{color:var(--muted); font-size:15px; margin:0 0 6px; font-style:italic}
 .req{color:var(--err)}
-.opts{display:flex; flex-wrap:wrap; gap:8px; margin-top:14px}
-.opts.stack{flex-direction:column; gap:8px}
-label.pill{display:flex; align-items:center; gap:8px; border:1.5px solid var(--line); border-radius:12px; padding:10px 14px; cursor:pointer; font-size:15px; background:var(--card); min-width:0}
-label.pill:hover{border-color:var(--accent)}
-label.pill input{accent-color:var(--accent); width:18px; height:18px; margin:0; flex-shrink:0}
+.opts{display:flex; flex-direction:column; gap:10px; margin-top:18px}
+label.pill{display:flex; align-items:center; gap:12px; border:1.5px solid var(--line); border-radius:14px; padding:14px 16px; cursor:pointer; font-size:16px; background:var(--card); min-width:0}
+label.pill input{accent-color:var(--accent); width:20px; height:20px; margin:0; flex-shrink:0}
 label.pill:has(input:checked){background:var(--accent-soft); border-color:var(--accent); color:var(--accent-ink); font-weight:500}
 input[type=text],textarea{
-  width:100%; border:1.5px solid var(--line); border-radius:12px; padding:12px 14px;
-  font:inherit; color:var(--ink); background:var(--card); margin-top:12px;
+  width:100%; border:1.5px solid var(--line); border-radius:14px; padding:14px 16px;
+  font:inherit; font-size:16px; color:var(--ink); background:var(--card); margin-top:18px;
 }
-textarea{min-height:96px; resize:vertical}
+textarea{min-height:120px; resize:vertical}
 input[type=text]:focus,textarea:focus{outline:2px solid var(--accent); outline-offset:1px; border-color:var(--accent)}
-.otherbox{display:none; margin-top:8px}
+.otherbox{display:none; margin-top:2px}
 .otherbox.show{display:block}
-#submitBtn{
-  width:100%; border:none; border-radius:14px; background:var(--accent); color:#fff;
-  font:700 18px 'Space Grotesk',Arial,sans-serif; padding:16px; cursor:pointer; margin-top:22px;
+.otherbox input{margin-top:8px}
+#nav{flex-shrink:0; background:var(--bg); border-top:1px solid var(--line); padding:12px 16px calc(12px + env(safe-area-inset-bottom, 0px))}
+#navRow{display:flex; gap:10px; max-width:640px; margin:0 auto}
+#backBtn{
+  border:1.5px solid var(--line); background:var(--card); color:var(--muted);
+  border-radius:14px; padding:14px 20px; font:500 16px 'DM Sans',Arial,sans-serif; cursor:pointer;
 }
-#submitBtn:hover{filter:brightness(1.08)}
-#submitBtn:disabled{opacity:.6; cursor:wait}
-#errMsg{color:var(--err); font-size:14px; margin-top:10px; display:none}
-#thanks{display:none; text-align:center; padding:64px 0}
-#thanks .big{font-size:56px}
-#thanks h2{font-family:'Space Grotesk',Arial,sans-serif; font-size:30px; margin:12px 0 8px}
-#thanks p{color:var(--muted)}
-footer{margin-top:40px; color:var(--muted); font-size:13px; text-align:center}
-@media (prefers-reduced-motion: reduce){ *{transition:none!important} }
+#nextBtn{
+  flex:1; border:none; border-radius:14px; background:var(--accent); color:#fff;
+  font:700 17px 'Space Grotesk',Arial,sans-serif; padding:14px; cursor:pointer;
+}
+#nextBtn:disabled{opacity:.6; cursor:wait}
+#errMsg{color:var(--err); font-size:14px; margin:8px auto 0; max-width:640px; display:none}
+/* intro & thanks */
+.hero .qt{font-size:clamp(28px,7vw,36px); margin-top:28px}
+.meta{display:flex; gap:8px; flex-wrap:wrap; margin:16px 0}
+.meta span{font-size:13px; background:var(--accent-soft); color:var(--accent-ink); border-radius:999px; padding:6px 12px; font-weight:500}
+.foot{color:var(--muted); font-size:13px; margin-top:18px}
+#thanksStep{text-align:center; padding-top:48px}
+#thanksStep .big{font-size:60px}
 </style>
 </head>
 <body>
-<div class="wrap">
 
-  <div id="bar" aria-hidden="true">
-    <div id="barTrack"><div id="barFill"></div></div>
-    <div id="barLabel">0 of 10 required answered</div>
+<div id="top">
+  <div id="topRow"><span id="stepLabel"></span><span id="reqLabel"></span></div>
+  <div id="barTrack"><div id="barFill"></div></div>
+</div>
+
+<div id="stage">
+
+  <div class="step hero" data-kind="intro">
+    <p class="qt">How does India shop online?</p>
+    <p class="qh" style="font-style:normal">A short, independent study on online shopping habits — how we research, compare, buy and return. No right or wrong answers.</p>
+    <div class="meta"><span>⏱ 3 minutes</span><span>🙈 100% anonymous</span><span>🇮🇳 Hindi/English दोनों चलेंगे</span></div>
+    <p class="foot">An independent consumer research survey · No personal data collected</p>
   </div>
 
-  <div id="formView">
-  <header class="hero">
-    <h1>How does India shop online?</h1>
-    <p class="sub">A short, independent study on online shopping habits — how we research, compare, buy and return. No right or wrong answers.</p>
-    <div class="meta"><span>⏱ 3 minutes</span><span>🙈 100% anonymous</span><span>🇮🇳 Hindi/English दोनों चलेंगे</span></div>
-  </header>
-
-  <div class="section-h">A · About you</div>
-
-  <div class="card" data-q="age">
-    <div class="qrow"><span class="qnum">1</span><p class="qt">Your age group <span class="req">*</span></p></div>
+  <div class="step" data-key="age" data-kind="radio" data-req="1">
+    <p class="qt">Your age group <span class="req">*</span></p>
     <div class="opts">
       <label class="pill"><input type="radio" name="age" value="Under 18">Under 18</label>
       <label class="pill"><input type="radio" name="age" value="18-24">18–24</label>
@@ -99,8 +99,8 @@ footer{margin-top:40px; color:var(--muted); font-size:13px; text-align:center}
     </div>
   </div>
 
-  <div class="card" data-q="gender">
-    <div class="qrow"><span class="qnum">2</span><p class="qt">Gender</p></div>
+  <div class="step" data-key="gender" data-kind="radio">
+    <p class="qt">Gender</p>
     <div class="opts">
       <label class="pill"><input type="radio" name="gender" value="Female">Female</label>
       <label class="pill"><input type="radio" name="gender" value="Male">Male</label>
@@ -109,13 +109,13 @@ footer{margin-top:40px; color:var(--muted); font-size:13px; text-align:center}
     </div>
   </div>
 
-  <div class="card" data-q="city">
-    <div class="qrow"><span class="qnum">3</span><p class="qt">Which city or town do you live in? <span class="req">*</span></p></div>
+  <div class="step" data-key="city" data-kind="text" data-req="1">
+    <p class="qt">Which city or town do you live in? <span class="req">*</span></p>
     <input type="text" id="city" placeholder="e.g. Pune, Indore, Guwahati…" autocomplete="address-level2">
   </div>
 
-  <div class="card" data-q="occupation">
-    <div class="qrow"><span class="qnum">4</span><p class="qt">What do you do?</p></div>
+  <div class="step" data-key="occupation" data-kind="radio">
+    <p class="qt">What do you do?</p>
     <div class="opts">
       <label class="pill"><input type="radio" name="occupation" value="Student">Student</label>
       <label class="pill"><input type="radio" name="occupation" value="Working professional">Working professional</label>
@@ -125,11 +125,9 @@ footer{margin-top:40px; color:var(--muted); font-size:13px; text-align:center}
     </div>
   </div>
 
-  <div class="section-h">B · Your shopping</div>
-
-  <div class="card" data-q="platforms">
-    <div class="qrow"><span class="qnum">5</span><p class="qt">Where do you shop online? <span class="req">*</span></p></div>
-    <p class="qh">Select all that you use · जो-जो use करते हो सब चुनो</p>
+  <div class="step" data-key="platforms" data-kind="check" data-req="1">
+    <p class="qt">Where do you shop online? <span class="req">*</span></p>
+    <p class="qh">जो-जो use करते हो सब चुनो · select all</p>
     <div class="opts">
       <label class="pill"><input type="checkbox" name="platforms" value="Amazon">Amazon</label>
       <label class="pill"><input type="checkbox" name="platforms" value="Flipkart">Flipkart</label>
@@ -145,8 +143,8 @@ footer{margin-top:40px; color:var(--muted); font-size:13px; text-align:center}
     <div class="otherbox" id="ob-platformOther"><input type="text" id="platformOther" placeholder="Which one?"></div>
   </div>
 
-  <div class="card" data-q="frequency">
-    <div class="qrow"><span class="qnum">6</span><p class="qt">How often do you shop online? <span class="req">*</span></p></div>
+  <div class="step" data-key="frequency" data-kind="radio" data-req="1">
+    <p class="qt">How often do you shop online? <span class="req">*</span></p>
     <div class="opts">
       <label class="pill"><input type="radio" name="frequency" value="Every week">Every week</label>
       <label class="pill"><input type="radio" name="frequency" value="2-3 times a month">2–3 times a month</label>
@@ -155,9 +153,9 @@ footer{margin-top:40px; color:var(--muted); font-size:13px; text-align:center}
     </div>
   </div>
 
-  <div class="card" data-q="research">
-    <div class="qrow"><span class="qnum">7</span><p class="qt">Before buying something big (a phone, skincare, shoes) — where do you research? <span class="req">*</span></p></div>
-    <p class="qh">कहाँ research करते हो? Select all that apply</p>
+  <div class="step" data-key="research" data-kind="check" data-req="1">
+    <p class="qt">Before buying something big — where do you research? <span class="req">*</span></p>
+    <p class="qh">Phone, skincare, shoes… कहाँ research करते हो? Select all</p>
     <div class="opts">
       <label class="pill"><input type="checkbox" name="research" value="YouTube reviews">YouTube reviews</label>
       <label class="pill"><input type="checkbox" name="research" value="Google search">Google search</label>
@@ -170,8 +168,8 @@ footer{margin-top:40px; color:var(--muted); font-size:13px; text-align:center}
     </div>
   </div>
 
-  <div class="card" data-q="researchTime">
-    <div class="qrow"><span class="qnum">8</span><p class="qt">How much time does that research usually take? <span class="req">*</span></p></div>
+  <div class="step" data-key="researchTime" data-kind="radio" data-req="1">
+    <p class="qt">How much time does that research usually take? <span class="req">*</span></p>
     <div class="opts">
       <label class="pill"><input type="radio" name="researchTime" value="Under 10 min">Under 10 min</label>
       <label class="pill"><input type="radio" name="researchTime" value="10-30 min">10–30 min</label>
@@ -181,17 +179,15 @@ footer{margin-top:40px; color:var(--muted); font-size:13px; text-align:center}
     </div>
   </div>
 
-  <div class="section-h">C · The annoying parts</div>
-
-  <div class="card" data-q="frustrations">
-    <div class="qrow"><span class="qnum">9</span><p class="qt">What frustrates you the most while deciding what to buy? <span class="req">*</span></p></div>
+  <div class="step" data-key="frustrations" data-kind="check" data-req="1">
+    <p class="qt">What frustrates you the most while deciding what to buy? <span class="req">*</span></p>
     <p class="qh">Select all that apply</p>
-    <div class="opts stack">
+    <div class="opts">
       <label class="pill"><input type="checkbox" name="frustrations" value="Too many options">Too many options — decide नहीं हो पाता</label>
       <label class="pill"><input type="checkbox" name="frustrations" value="Fake or unreliable reviews">Fake or unreliable reviews</label>
       <label class="pill"><input type="checkbox" name="frustrations" value="Different prices on different apps">Different prices on different apps</label>
       <label class="pill"><input type="checkbox" name="frustrations" value="Info scattered across many apps">Info scattered across many apps</label>
-      <label class="pill"><input type="checkbox" name="frustrations" value="Long videos for one small answer">Watching long videos for one small answer</label>
+      <label class="pill"><input type="checkbox" name="frustrations" value="Long videos for one small answer">Long videos for one small answer</label>
       <label class="pill"><input type="checkbox" name="frustrations" value="Don't know which advice to trust">Don't know whose advice to trust</label>
       <label class="pill"><input type="checkbox" name="frustrations" value="Nothing frustrates me">Nothing really frustrates me</label>
       <label class="pill"><input type="checkbox" name="frustrations" value="Other" data-other="frustrationOther">Other</label>
@@ -199,24 +195,24 @@ footer{margin-top:40px; color:var(--muted); font-size:13px; text-align:center}
     <div class="otherbox" id="ob-frustrationOther"><input type="text" id="frustrationOther" placeholder="Tell us…"></div>
   </div>
 
-  <div class="card" data-q="multiPain">
-    <div class="qrow"><span class="qnum">10</span><p class="qt">When you use more than one shopping app, what annoys you? <span class="req">*</span></p></div>
-    <p class="qh">अलग-अलग apps use करने में क्या दिक्कत होती है? Select all that apply</p>
-    <div class="opts stack">
+  <div class="step" data-key="multiPain" data-kind="check" data-req="1">
+    <p class="qt">When you use more than one shopping app, what annoys you? <span class="req">*</span></p>
+    <p class="qh">अलग-अलग apps use करने में क्या दिक्कत होती है? Select all</p>
+    <div class="opts">
       <label class="pill"><input type="checkbox" name="multiPain" value="Switching between apps to compare prices">बार-बार apps switch करके prices compare करना</label>
       <label class="pill"><input type="checkbox" name="multiPain" value="Can't remember which app had what price">Can't remember which app had what price</label>
       <label class="pill"><input type="checkbox" name="multiPain" value="Tracking orders across many apps">Orders अलग-अलग apps में track करना</label>
       <label class="pill"><input type="checkbox" name="multiPain" value="Different return policies everywhere">Every app has different return rules</label>
-      <label class="pill"><input type="checkbox" name="multiPain" value="Delivery charges and coins/memberships differ">Delivery charges, coins, memberships sab alag</label>
-      <label class="pill"><input type="checkbox" name="multiPain" value="Searching the same product again on each app">Same product har app pe dobara search karna</label>
+      <label class="pill"><input type="checkbox" name="multiPain" value="Delivery charges and coins/memberships differ">Delivery charges, coins, memberships सब अलग</label>
+      <label class="pill"><input type="checkbox" name="multiPain" value="Searching the same product again on each app">Same product हर app पे दोबारा search करना</label>
       <label class="pill"><input type="checkbox" name="multiPain" value="No real problem">No real problem — I manage fine</label>
       <label class="pill"><input type="checkbox" name="multiPain" value="Other" data-other="multiPainOther">Other</label>
     </div>
     <div class="otherbox" id="ob-multiPainOther"><input type="text" id="multiPainOther" placeholder="Tell us…"></div>
   </div>
 
-  <div class="card" data-q="priceCompare">
-    <div class="qrow"><span class="qnum">11</span><p class="qt">Do you compare prices across platforms before buying? <span class="req">*</span></p></div>
+  <div class="step" data-key="priceCompare" data-kind="radio" data-req="1">
+    <p class="qt">Do you compare prices across platforms before buying? <span class="req">*</span></p>
     <div class="opts">
       <label class="pill"><input type="radio" name="priceCompare" value="Always">Always</label>
       <label class="pill"><input type="radio" name="priceCompare" value="Sometimes">Sometimes</label>
@@ -224,10 +220,10 @@ footer{margin-top:40px; color:var(--muted); font-size:13px; text-align:center}
     </div>
   </div>
 
-  <div class="card" data-q="trackingPain">
-    <div class="qrow"><span class="qnum">12</span><p class="qt">Order tracking &amp; returns — what's painful?</p></div>
+  <div class="step" data-key="trackingPain" data-kind="check">
+    <p class="qt">Order tracking &amp; returns — what's painful?</p>
     <p class="qh">Select all that apply</p>
-    <div class="opts stack">
+    <div class="opts">
       <label class="pill"><input type="checkbox" name="trackingPain" value="Checking many apps to track orders">Checking many apps to track my orders</label>
       <label class="pill"><input type="checkbox" name="trackingPain" value="Return process is confusing">Return का process समझ नहीं आता</label>
       <label class="pill"><input type="checkbox" name="trackingPain" value="Refund takes too long / no updates">Refund takes too long / no updates</label>
@@ -238,10 +234,8 @@ footer{margin-top:40px; color:var(--muted); font-size:13px; text-align:center}
     <div class="otherbox" id="ob-trackingOther"><input type="text" id="trackingOther" placeholder="Tell us…"></div>
   </div>
 
-  <div class="section-h">D · AI &amp; one last thing</div>
-
-  <div class="card" data-q="aiUse">
-    <div class="qrow"><span class="qnum">13</span><p class="qt">Do you use AI (ChatGPT, Gemini…) to research products? <span class="req">*</span></p></div>
+  <div class="step" data-key="aiUse" data-kind="radio" data-req="1">
+    <p class="qt">Do you use AI (ChatGPT, Gemini…) to research products? <span class="req">*</span></p>
     <div class="opts">
       <label class="pill"><input type="radio" name="aiUse" value="Yes, regularly">Yes, regularly</label>
       <label class="pill"><input type="radio" name="aiUse" value="Tried a few times">Tried a few times</label>
@@ -249,12 +243,12 @@ footer{margin-top:40px; color:var(--muted); font-size:13px; text-align:center}
     </div>
   </div>
 
-  <div class="card" data-q="aiProblems">
-    <div class="qrow"><span class="qnum">14</span><p class="qt">If you've asked AI about products — what went wrong?</p></div>
-    <p class="qh">Skip if you've never tried · Select all that apply</p>
-    <div class="opts stack">
-      <label class="pill"><input type="checkbox" name="aiProblems" value="Prices were wrong or outdated">Prices wrong ya purane the</label>
-      <label class="pill"><input type="checkbox" name="aiProblems" value="No direct link to buy">Buy karne ka direct link नहीं मिला</label>
+  <div class="step" data-key="aiProblems" data-kind="check">
+    <p class="qt">If you've asked AI about products — what went wrong?</p>
+    <p class="qh">Never tried? Just tap Next · Select all that apply</p>
+    <div class="opts">
+      <label class="pill"><input type="checkbox" name="aiProblems" value="Prices were wrong or outdated">Prices wrong या पुराने थे</label>
+      <label class="pill"><input type="checkbox" name="aiProblems" value="No direct link to buy">Buy करने का direct link नहीं मिला</label>
       <label class="pill"><input type="checkbox" name="aiProblems" value="Answers too generic, not for me">Answers too generic — मेरे लिए नहीं थे</label>
       <label class="pill"><input type="checkbox" name="aiProblems" value="Different answer every time">हर बार अलग answer मिलता है</label>
       <label class="pill"><input type="checkbox" name="aiProblems" value="Doesn't know Indian products/prices well">Indian products/prices ठीक से नहीं जानता</label>
@@ -266,29 +260,32 @@ footer{margin-top:40px; color:var(--muted); font-size:13px; text-align:center}
     <div class="otherbox" id="ob-aiProblemsOther"><input type="text" id="aiProblemsOther" placeholder="Tell us…"></div>
   </div>
 
-  <div class="card" data-q="existingApp">
-    <div class="qrow"><span class="qnum">15</span><p class="qt">Is there any app or website that makes all this easier for you? Name it.</p></div>
-    <p class="qh">कोई भी app — India ka ya bahar ka</p>
-    <input type="text" id="existingApp" placeholder="App / website ka naam (optional)">
+  <div class="step" data-key="existingApp" data-kind="text">
+    <p class="qt">Is there any app or website that makes all this easier for you?</p>
+    <p class="qh">कोई भी app — India का या बाहर का · optional</p>
+    <input type="text" id="existingApp" placeholder="App / website ka naam">
   </div>
 
-  <div class="card" data-q="oneFix">
-    <div class="qrow"><span class="qnum">16</span><p class="qt">If you could fix ONE thing about online shopping, what would it be?</p></div>
-    <p class="qh">एक magic wand मिले तो online shopping की कौनसी एक चीज़ बदलोगे?</p>
-    <textarea id="oneFix" placeholder="Hindi, English, Hinglish — kuch bhi chalega (optional)"></textarea>
+  <div class="step" data-key="oneFix" data-kind="textarea">
+    <p class="qt">If you could fix ONE thing about online shopping, what would it be?</p>
+    <p class="qh">एक magic wand मिले तो कौनसी एक चीज़ बदलोगे? Hindi/English कुछ भी · optional</p>
+    <textarea id="oneFix" placeholder="Type here…"></textarea>
   </div>
 
-  <button id="submitBtn" type="button">Submit my answers →</button>
-  <p id="errMsg"></p>
-  </div>
-
-  <div id="thanks">
+  <div class="step" id="thanksStep" data-kind="thanks">
     <div class="big">🙏</div>
-    <h2>Thank you!</h2>
-    <p>Your answers are in — you just helped us understand how India really shops.<br>Share this with 2 friends? 😄</p>
+    <p class="qt">Thank you!</p>
+    <p class="qh" style="font-style:normal">Your answers are in — you just helped us understand how India really shops.<br>Share this with 2 friends? 😄</p>
   </div>
 
-  <footer>An independent consumer research survey · No personal data collected · Responses are anonymous</footer>
+</div>
+
+<div id="nav">
+  <p id="errMsg"></p>
+  <div id="navRow">
+    <button id="backBtn" type="button">← Back</button>
+    <button id="nextBtn" type="button">Start →</button>
+  </div>
 </div>
 
 <script>
@@ -296,51 +293,81 @@ footer{margin-top:40px; color:var(--muted); font-size:13px; text-align:center}
 var ENDPOINT = "https://script.google.com/macros/s/AKfycbwPsSWPveQ3OQdFiwC8rRtr-TlX-HYPcu6GOhGLVchU8YTaYBohpg69UdJjaZ6cYD1b/exec";
 /* ================================================================= */
 
-var REQUIRED = ["age","city","platforms","frequency","research","researchTime","frustrations","multiPain","priceCompare","aiUse"];
-var RADIOS   = ["age","gender","occupation","frequency","researchTime","priceCompare","aiUse"];
-var CHECKS   = ["platforms","research","frustrations","multiPain","trackingPain","aiProblems"];
+var steps = Array.prototype.slice.call(document.querySelectorAll(".step"));
+var qSteps = steps.filter(function(s){return s.dataset.key;});
+var cur = 0;
+var stage = document.getElementById("stage");
+var nextBtn = document.getElementById("nextBtn");
+var backBtn = document.getElementById("backBtn");
+var errMsg = document.getElementById("errMsg");
 
 function radioVal(n){var el=document.querySelector('input[name="'+n+'"]:checked');return el?el.value:"";}
 function checkVals(n){return Array.prototype.map.call(document.querySelectorAll('input[name="'+n+'"]:checked'),function(e){return e.value;});}
 function textVal(id){var el=document.getElementById(id);return el?el.value.trim():"";}
 
-function answered(q){
-  if(RADIOS.indexOf(q)>-1) return !!radioVal(q);
-  if(CHECKS.indexOf(q)>-1) return checkVals(q).length>0;
-  return !!textVal(q);
+function stepAnswered(s){
+  var k=s.dataset.key, kind=s.dataset.kind;
+  if(kind==="radio") return !!radioVal(k);
+  if(kind==="check") return checkVals(k).length>0;
+  return !!textVal(k);
 }
-function updateBar(){
-  var done=REQUIRED.filter(answered).length;
-  document.getElementById("barFill").style.width=(done/REQUIRED.length*100)+"%";
-  document.getElementById("barLabel").textContent=done+" of "+REQUIRED.length+" required answered";
+
+function render(){
+  steps.forEach(function(s,i){s.classList.toggle("active", i===cur);});
+  var s=steps[cur];
+  errMsg.style.display="none";
+  backBtn.style.visibility = (cur===0 || s.dataset.kind==="thanks") ? "hidden" : "visible";
+  var qIndex = qSteps.indexOf(s);
+  var total = qSteps.length;
+  if(s.dataset.kind==="intro"){
+    document.getElementById("stepLabel").textContent = total+" quick questions";
+    document.getElementById("reqLabel").textContent = "";
+    document.getElementById("barFill").style.width = "0%";
+    nextBtn.textContent = "Start →";
+  } else if(s.dataset.kind==="thanks"){
+    document.getElementById("stepLabel").textContent = "Done";
+    document.getElementById("reqLabel").textContent = "";
+    document.getElementById("barFill").style.width = "100%";
+    document.getElementById("nav").style.display = "none";
+  } else {
+    document.getElementById("stepLabel").textContent = "Question "+(qIndex+1)+" of "+total;
+    document.getElementById("reqLabel").textContent = s.dataset.req ? "Required" : "Optional — skip if you like";
+    document.getElementById("barFill").style.width = (qIndex/total*100)+"%";
+    nextBtn.textContent = (qIndex===total-1) ? "Submit ✓" : "Next →";
+  }
+  stage.scrollTop = 0;
 }
+
+function go(dir){
+  var s=steps[cur];
+  if(dir>0 && s.dataset.req==="1" && !stepAnswered(s)){
+    errMsg.textContent="Ye question required hai 🙂";
+    errMsg.style.display="block";
+    return;
+  }
+  var lastQ = steps.indexOf(qSteps[qSteps.length-1]);
+  if(dir>0 && cur===lastQ){ submit(); return; }
+  cur=Math.max(0,Math.min(steps.length-1,cur+dir));
+  render();
+}
+nextBtn.addEventListener("click",function(){go(1);});
+backBtn.addEventListener("click",function(){go(-1);});
+
+/* auto-advance on radio pick (small delay so the tick is visible) */
 document.addEventListener("change",function(e){
   var t=e.target;
   if(t.dataset && t.dataset.other){
     var box=document.getElementById("ob-"+t.dataset.other);
     if(box) box.classList.toggle("show", t.checked);
-  }
-  updateBar();
-});
-document.addEventListener("input",updateBar);
-
-document.getElementById("submitBtn").addEventListener("click",function(){
-  var btn=this, err=document.getElementById("errMsg");
-  err.style.display="none";
-  document.querySelectorAll(".card.missing").forEach(function(c){c.classList.remove("missing");});
-  var firstMiss=null;
-  REQUIRED.forEach(function(q){
-    if(!answered(q)){
-      var card=document.querySelector('.card[data-q="'+q+'"]');
-      if(card){card.classList.add("missing"); if(!firstMiss) firstMiss=card;}
-    }
-  });
-  if(firstMiss){
-    err.textContent="Kuch required questions reh gaye — red wale cards dekh lo 🙂";
-    err.style.display="block";
-    firstMiss.scrollIntoView({behavior:"smooth",block:"center"});
     return;
   }
+  var s=steps[cur];
+  if(t.type==="radio" && s.dataset.kind==="radio"){
+    setTimeout(function(){ go(1); }, 280);
+  }
+});
+
+function submit(){
   var payload={
     submittedAt:new Date().toISOString(),
     age:radioVal("age"), gender:radioVal("gender"), city:textVal("city"),
@@ -358,25 +385,23 @@ document.getElementById("submitBtn").addEventListener("click",function(){
     oneFix:textVal("oneFix")
   };
   if(ENDPOINT.indexOf("http")!==0){
-    err.textContent="Survey endpoint not configured yet (ENDPOINT in the file).";
-    err.style.display="block"; return;
+    errMsg.textContent="Survey endpoint not configured yet (ENDPOINT in the file).";
+    errMsg.style.display="block"; return;
   }
-  btn.disabled=true; btn.textContent="Submitting…";
+  nextBtn.disabled=true; nextBtn.textContent="Submitting…";
   fetch(ENDPOINT,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)})
   .then(function(){
     try{localStorage.setItem("shopping_survey_done","1");}catch(e){}
-    document.getElementById("formView").style.display="none";
-    document.getElementById("bar").style.display="none";
-    document.getElementById("thanks").style.display="block";
-    window.scrollTo({top:0,behavior:"smooth"});
+    cur=steps.length-1; render();
   })
   .catch(function(){
-    btn.disabled=false; btn.textContent="Submit my answers →";
-    err.textContent="Network issue — please try once more.";
-    err.style.display="block";
+    nextBtn.disabled=false; nextBtn.textContent="Submit ✓";
+    errMsg.textContent="Network issue — please try once more.";
+    errMsg.style.display="block";
   });
-});
-updateBar();
+}
+
+render();
 </script>
 </body>
 </html>
