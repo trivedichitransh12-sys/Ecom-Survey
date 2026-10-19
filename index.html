@@ -180,32 +180,40 @@ input[type=text]:focus,textarea:focus{outline:2px solid var(--accent); outline-o
   </div>
 
   <div class="step" data-key="frustrations" data-kind="check" data-req="1">
-    <p class="qt">What frustrates you the most while deciding what to buy? <span class="req">*</span></p>
+    <p class="qt">What makes buying online harder than it should be? <span class="req">*</span></p>
     <p class="qh">Select all that apply</p>
     <div class="opts">
       <label class="pill"><input type="checkbox" name="frustrations" value="Too many options">Too many options — decide नहीं हो पाता</label>
-      <label class="pill"><input type="checkbox" name="frustrations" value="Fake or unreliable reviews">Fake or unreliable reviews</label>
-      <label class="pill"><input type="checkbox" name="frustrations" value="Different prices on different apps">Different prices on different apps</label>
-      <label class="pill"><input type="checkbox" name="frustrations" value="Info scattered across many apps">Info scattered across many apps</label>
-      <label class="pill"><input type="checkbox" name="frustrations" value="Long videos for one small answer">Long videos for one small answer</label>
+      <label class="pill"><input type="checkbox" name="frustrations" value="Product looks different in real life">Product looks different in real life</label>
+      <label class="pill"><input type="checkbox" name="frustrations" value="Fake or unreliable reviews">Hard to tell if reviews are genuine</label>
+      <label class="pill"><input type="checkbox" name="frustrations" value="Size or fit is a guess">Size / fit is a guess</label>
+      <label class="pill"><input type="checkbox" name="frustrations" value="Prices keep changing">Prices keep changing</label>
+      <label class="pill"><input type="checkbox" name="frustrations" value="Hidden charges at checkout">Hidden charges at checkout</label>
+      <label class="pill"><input type="checkbox" name="frustrations" value="Info scattered across many apps">Have to check too many places before deciding</label>
+      <label class="pill"><input type="checkbox" name="frustrations" value="Not sure about quality">Not sure about the quality</label>
+      <label class="pill"><input type="checkbox" name="frustrations" value="Long videos for one small answer">Reviews and videos take too long to go through</label>
       <label class="pill"><input type="checkbox" name="frustrations" value="Don't know which advice to trust">Don't know whose advice to trust</label>
-      <label class="pill"><input type="checkbox" name="frustrations" value="Nothing frustrates me">Nothing really frustrates me</label>
+      <label class="pill"><input type="checkbox" name="frustrations" value="Nothing frustrates me">Nothing really bothers me</label>
       <label class="pill"><input type="checkbox" name="frustrations" value="Other" data-other="frustrationOther">Other</label>
     </div>
     <div class="otherbox" id="ob-frustrationOther"><input type="text" id="frustrationOther" placeholder="Tell us…"></div>
   </div>
 
   <div class="step" data-key="multiPain" data-kind="check" data-req="1">
-    <p class="qt">When you use more than one shopping app, what annoys you? <span class="req">*</span></p>
-    <p class="qh">अलग-अलग apps use करने में क्या दिक्कत होती है? Select all</p>
+    <p class="qt">Think of your last few online orders — what was annoying? <span class="req">*</span></p>
+    <p class="qh">पिछले कुछ orders में क्या परेशानी हुई? Select all</p>
     <div class="opts">
-      <label class="pill"><input type="checkbox" name="multiPain" value="Switching between apps to compare prices">बार-बार apps switch करके prices compare करना</label>
-      <label class="pill"><input type="checkbox" name="multiPain" value="Can't remember which app had what price">Can't remember which app had what price</label>
-      <label class="pill"><input type="checkbox" name="multiPain" value="Tracking orders across many apps">Orders अलग-अलग apps में track करना</label>
-      <label class="pill"><input type="checkbox" name="multiPain" value="Different return policies everywhere">Every app has different return rules</label>
-      <label class="pill"><input type="checkbox" name="multiPain" value="Delivery charges and coins/memberships differ">Delivery charges, coins, memberships सब अलग</label>
-      <label class="pill"><input type="checkbox" name="multiPain" value="Searching the same product again on each app">Same product हर app पे दोबारा search करना</label>
-      <label class="pill"><input type="checkbox" name="multiPain" value="No real problem">No real problem — I manage fine</label>
+      <label class="pill"><input type="checkbox" name="multiPain" value="Delivery was late">Delivery late हुई</label>
+      <label class="pill"><input type="checkbox" name="multiPain" value="Switching between apps to compare prices">Prices compare करने में time लगा</label>
+      <label class="pill"><input type="checkbox" name="multiPain" value="Wrong or damaged product">Wrong या damaged product आया</label>
+      <label class="pill"><input type="checkbox" name="multiPain" value="Tracking orders across many apps">Orders का track रखना मुश्किल था</label>
+      <label class="pill"><input type="checkbox" name="multiPain" value="Customer support hard to reach">Customer support से बात नहीं हो पाई</label>
+      <label class="pill"><input type="checkbox" name="multiPain" value="Return or refund hassle">Return / refund में झंझट</label>
+      <label class="pill"><input type="checkbox" name="multiPain" value="Payment or COD issue">Payment या COD में दिक्कत</label>
+      <label class="pill"><input type="checkbox" name="multiPain" value="Delivery charges and coins/memberships differ">Delivery charges, coins, memberships का confusion</label>
+      <label class="pill"><input type="checkbox" name="multiPain" value="Searching the same product again on each app">Same product बार-बार search करना पड़ा</label>
+      <label class="pill"><input type="checkbox" name="multiPain" value="Too many promo messages">बहुत ज़्यादा offers / promo messages</label>
+      <label class="pill"><input type="checkbox" name="multiPain" value="No real problem">No real problem — all fine</label>
       <label class="pill"><input type="checkbox" name="multiPain" value="Other" data-other="multiPainOther">Other</label>
     </div>
     <div class="otherbox" id="ob-multiPainOther"><input type="text" id="multiPainOther" placeholder="Tell us…"></div>
@@ -292,6 +300,16 @@ input[type=text]:focus,textarea:focus{outline:2px solid var(--accent); outline-o
 /* ==== CONFIG — paste your Google Apps Script Web App URL here ==== */
 var ENDPOINT = "https://script.google.com/macros/s/AKfycbwPsSWPveQ3OQdFiwC8rRtr-TlX-HYPcu6GOhGLVchU8YTaYBohpg69UdJjaZ6cYD1b/exec";
 /* ================================================================= */
+
+/* shuffle options of the two pain questions; "nothing" and "Other" stay at the bottom */
+["frustrations","multiPain"].forEach(function(k){
+  var box=document.querySelector('.step[data-key="'+k+'"] .opts'); if(!box) return;
+  var all=Array.prototype.slice.call(box.children);
+  var fixed=all.filter(function(l){var v=l.querySelector("input").value;return v==="Other"||v==="No real problem"||v==="Nothing frustrates me";});
+  var mov=all.filter(function(l){return fixed.indexOf(l)<0;});
+  for(var i=mov.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=mov[i];mov[i]=mov[j];mov[j]=t;}
+  mov.concat(fixed).forEach(function(l){box.appendChild(l);});
+});
 
 var steps = Array.prototype.slice.call(document.querySelectorAll(".step"));
 var qSteps = steps.filter(function(s){return s.dataset.key;});
