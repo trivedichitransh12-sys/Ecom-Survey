@@ -82,10 +82,10 @@ input[type=text]:focus,textarea:focus{outline:2px solid var(--accent); outline-o
 <div id="stage">
 
   <div class="step hero" data-kind="intro">
-    <p class="qt">How does India shop online?</p>
-    <p class="qh" style="font-style:normal">A short, independent study on online shopping habits — how we research, compare, buy and return. No right or wrong answers.</p>
+    <p class="qt">How do people shop online?</p>
+    <p class="qh" style="font-style:normal">A short UX research study on online shopping habits — how we research, compare, buy and return. No right or wrong answers.</p>
     <div class="meta"><span>⏱ 3 minutes</span><span>🙈 100% anonymous</span><span>✍️ Answer in any language</span></div>
-    <p class="foot">An independent consumer research survey · No personal data collected</p>
+    <p class="foot">UX research survey · No personal data collected</p>
   </div>
 
   <div class="step" data-key="age" data-kind="radio" data-req="1">
@@ -110,8 +110,8 @@ input[type=text]:focus,textarea:focus{outline:2px solid var(--accent); outline-o
   </div>
 
   <div class="step" data-key="city" data-kind="text" data-req="1">
-    <p class="qt">Which city or town do you live in? <span class="req">*</span></p>
-    <input type="text" id="city" placeholder="e.g. Pune, Indore, Guwahati…" autocomplete="address-level2">
+    <p class="qt">Which city and country do you live in? <span class="req">*</span></p>
+    <input type="text" id="city" placeholder="e.g. Pune, India · Austin, USA · Dubai, UAE" autocomplete="address-level2">
   </div>
 
   <div class="step" data-key="occupation" data-kind="radio">
@@ -135,7 +135,11 @@ input[type=text]:focus,textarea:focus{outline:2px solid var(--accent); outline-o
       <label class="pill"><input type="checkbox" name="platforms" value="Ajio">Ajio</label>
       <label class="pill"><input type="checkbox" name="platforms" value="Nykaa">Nykaa</label>
       <label class="pill"><input type="checkbox" name="platforms" value="Meesho">Meesho</label>
-      <label class="pill"><input type="checkbox" name="platforms" value="Blinkit / Zepto / Instamart">Blinkit / Zepto / Instamart</label>
+      <label class="pill"><input type="checkbox" name="platforms" value="Blinkit / Zepto / Instamart">Quick-delivery apps (Blinkit, Zepto, Instacart…)</label>
+      <label class="pill"><input type="checkbox" name="platforms" value="eBay">eBay</label>
+      <label class="pill"><input type="checkbox" name="platforms" value="Walmart / Target">Walmart / Target</label>
+      <label class="pill"><input type="checkbox" name="platforms" value="AliExpress / Temu / Shein">AliExpress / Temu / Shein</label>
+      <label class="pill"><input type="checkbox" name="platforms" value="Noon / Namshi">Noon / Namshi</label>
       <label class="pill"><input type="checkbox" name="platforms" value="Instagram shops">Instagram shops</label>
       <label class="pill"><input type="checkbox" name="platforms" value="Brand websites">Brand websites</label>
       <label class="pill"><input type="checkbox" name="platforms" value="Other" data-other="platformOther">Other</label>
@@ -159,7 +163,7 @@ input[type=text]:focus,textarea:focus{outline:2px solid var(--accent); outline-o
     <div class="opts">
       <label class="pill"><input type="checkbox" name="research" value="YouTube reviews">YouTube reviews</label>
       <label class="pill"><input type="checkbox" name="research" value="Google search">Google search</label>
-      <label class="pill"><input type="checkbox" name="research" value="Amazon/Flipkart reviews">Amazon/Flipkart reviews</label>
+      <label class="pill"><input type="checkbox" name="research" value="Amazon/Flipkart reviews">Reviews on shopping sites</label>
       <label class="pill"><input type="checkbox" name="research" value="Instagram reels/pages">Instagram reels &amp; pages</label>
       <label class="pill"><input type="checkbox" name="research" value="Reddit / forums">Reddit / forums</label>
       <label class="pill"><input type="checkbox" name="research" value="Friends & family">Friends &amp; family</label>
@@ -264,7 +268,7 @@ input[type=text]:focus,textarea:focus{outline:2px solid var(--accent); outline-o
       <label class="pill"><input type="checkbox" name="aiProblems" value="No direct link to buy">No direct link to buy</label>
       <label class="pill"><input type="checkbox" name="aiProblems" value="Answers too generic, not for me">Answers were too generic</label>
       <label class="pill"><input type="checkbox" name="aiProblems" value="Different answer every time">A different answer every time</label>
-      <label class="pill"><input type="checkbox" name="aiProblems" value="Doesn't know Indian products/prices well">Didn't know Indian products or prices well</label>
+      <label class="pill"><input type="checkbox" name="aiProblems" value="Doesn't know local products/prices well">Didn't know products or prices where I live</label>
       <label class="pill"><input type="checkbox" name="aiProblems" value="Have to explain everything again each time">Had to explain everything again each time</label>
       <label class="pill"><input type="checkbox" name="aiProblems" value="Couldn't trust the answer">Couldn't fully trust the answer</label>
       <label class="pill"><input type="checkbox" name="aiProblems" value="No problem, it worked well">No problem — it worked well</label>
@@ -275,7 +279,7 @@ input[type=text]:focus,textarea:focus{outline:2px solid var(--accent); outline-o
 
   <div class="step" data-key="existingApp" data-kind="text">
     <p class="qt">Is there any app or website that makes all this easier for you?</p>
-    <p class="qh">Any app or website, from India or abroad · optional</p>
+    <p class="qh">Any app or website, from anywhere · optional</p>
     <input type="text" id="existingApp" placeholder="Name of the app or website">
   </div>
 
@@ -288,7 +292,7 @@ input[type=text]:focus,textarea:focus{outline:2px solid var(--accent); outline-o
   <div class="step" id="thanksStep" data-kind="thanks">
     <div class="big">🙏</div>
     <p class="qt">Thank you!</p>
-    <p class="qh" style="font-style:normal">Your answers are in — you just helped us understand how India really shops.<br>Share this with 2 friends? 😄</p>
+    <p class="qh" style="font-style:normal">Your answers are in — you just helped us understand how people really shop online.<br>Share this with 2 friends? 😄</p>
   </div>
 
 </div>
